@@ -1,3 +1,4 @@
+// src/users/users.service.ts
 import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -52,5 +53,18 @@ export class UsersService {
 
     await this.usersRepository.update(id, updateUserDto);
     return this.findOne(id);
+  }
+  
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find({
+      select: ['id', 'name', 'email', 'role'] // Exclude password from response
+    });
+  }
+
+  async remove(id: string): Promise<void> {
+    const result = await this.usersRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
 }
