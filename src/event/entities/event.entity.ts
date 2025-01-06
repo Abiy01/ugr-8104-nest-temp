@@ -1,3 +1,4 @@
+// src/event/entities/event.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('Event')
@@ -6,20 +7,14 @@ export class Event {
     id: string;
 
     @Column()
-    eventName: string;
+    title: string;
+
+    @Column('text')
+    description: string;
 
     @Column()
-    eventDate: Date;
-
-    @Column()
-    eventTime: string;
+    date: Date;
 
     @Column()
     location: string;
-
-    @Column('text')
-    eventDescription: string;
-
-    @Column({ nullable: true })
-    eventPhoto: string; // This could be a URL or file path
 }
