@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Events API')
-    .setDescription('The Events API description')
+    .setDescription('The Events API description. Public endpoints do not require authentication.')
     .setVersion('1.0')
     .addBearerAuth(
       {

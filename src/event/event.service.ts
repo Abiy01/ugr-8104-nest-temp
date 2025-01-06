@@ -1,9 +1,11 @@
+// src/event/event.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { PublicEventDto } from './dto/public-event.dto';
 
 @Injectable()
 export class EventsService {
@@ -17,8 +19,11 @@ export class EventsService {
     return await this.eventRepository.save(event);
   }
 
-  async findAll(): Promise<Event[]> {
-    return await this.eventRepository.find();
+  async findAllPublic(): Promise<PublicEventDto[]> {
+    const events = await this.eventRepository.find({
+      select: ['id', 'title', 'date'], // Only select these fields
+    });
+    return events;
   }
 
   async findOne(id: string): Promise<Event> {
